@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 const TodoCreateContainer = styled(CS.DivFlex)`
   width: 80%;
   gap: 1rem;
-  margin: 0 auto;
+  margin: 2rem auto;
 `;
 const TodoInputContainer = styled.div`
   position: relative;
@@ -36,7 +36,7 @@ const InputLable = styled.label`
 `;
 
 const TodoInput = styled.input`
-  height: 5rem;
+  height: 2rem;
   width: 100%;
   border: 1px solid #dddddd;
   font-size: 1rem;
@@ -52,6 +52,10 @@ const TodoInput = styled.input`
 `;
 
 const TodoBoxContainer = styled(CS.DivFlex)`
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: row;
   width: 80%;
   margin: 2rem auto 1rem;
   gap: 5rem;
@@ -147,7 +151,7 @@ const Home = () => {
         <button onClick={createTodoList}>추가하기</button>
       </TodoCreateContainer>
 
-      <TodoBoxContainer direction={'row'}>
+      <TodoBoxContainer>
         <TodoBox direction={'column'}>
           <TodoSectionTitle>했다</TodoSectionTitle>
           {/* //store의 리듀서에 있는 data를 받아와서 map과 filter로 isDone값에 따라 카드를 보여줌 */}
