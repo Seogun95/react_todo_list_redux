@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import * as CS from '../components/styled/commonStyle';
+import { useSelector, useDispatch } from 'react-redux';
+import { addTodoList } from '../redux/modules/todoModule';
 
 const TodoCreateContainer = styled(CS.DivFlex)`
   width: 80%;
@@ -82,6 +84,24 @@ const Home = () => {
   const titleInputHanlder = (e) => setTitleInput(e.target.value);
   const descInputHanlder = (e) => setDescInput(e.target.value);
 
+  //1. store에 접근하기 위해서 useSelector!!
+  const data = useSelector((state) => {
+    return state.todoReducer;
+  });
+
+  console.log(data);
+  //2. Dispatch 가져오기
+  const dispatch = useDispatch();
+
+  //3. create 생성 버튼 Handler
+  const createTodoList = () => {
+    if (titleInput !== '') {
+      dispatch(addTodoList(titleInput, descInput));
+      setTitleInput('');
+      setDescInput('');
+    }
+  };
+
   return (
     <>
       <TodoCreateContainer direction={'column'}>
@@ -105,18 +125,23 @@ const Home = () => {
             onChange={descInputHanlder}
           />
         </TodoInputContainer>
-        <button>추가하기</button>
+        <button onClick={createTodoList}>추가하기</button>
       </TodoCreateContainer>
 
       <TodoBoxContainer direction={'row'}>
         <TodoBox direction={'column'}>
-          <TodoSectionTitle>안했다</TodoSectionTitle>
-          <CardBox>
-            <div>
-              <h2>마라탕 먹기</h2>
-              <h4>월요일에 친구와 약속</h4>
-            </div>
-          </CardBox>
+          <TodoSectionTitle>했다</TodoSectionTitle>
+          {/* //store의 리듀서에 있는 data를 받아와서 map과 filter로 isDone값에 따라 카드를 보여줌 */}
+          {data
+            .filter((v) => v.isDone === false)
+            .map((item, i) => (
+              <CardBox key={item.id}>
+                <div>
+                  <h2>{item.title}</h2>
+                  <h4>{item.desc}</h4>
+                </div>
+              </CardBox>
+            ))}
         </TodoBox>
       </TodoBoxContainer>
     </>
