@@ -1,5 +1,6 @@
 // Actions
 const CREATE = 'todo/CREATE';
+const DELETE = 'todo/DELETE';
 
 //초기 상태 값 (state)
 const initialState = [
@@ -20,6 +21,13 @@ export const addTodoList = (title, desc) => {
   };
 };
 
+export const deleteTodo = (id) => {
+  return {
+    type: DELETE,
+    id,
+  };
+};
+
 // Reducer
 export default function todoReducer(state = initialState, action) {
   switch (action.type) {
@@ -35,6 +43,8 @@ export default function todoReducer(state = initialState, action) {
           isDone: false,
         },
       ];
+    case DELETE:
+      return state.filter((item) => item.id !== action.id);
 
     default:
       return state;

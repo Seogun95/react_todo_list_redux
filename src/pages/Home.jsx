@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import * as CS from '../components/styled/commonStyle';
 import { useSelector, useDispatch } from 'react-redux';
-import { addTodoList } from '../redux/modules/todoModule';
+import { addTodoList, deleteTodo } from '../redux/modules/todoModule';
 
 const TodoCreateContainer = styled(CS.DivFlex)`
   width: 80%;
@@ -102,6 +102,11 @@ const Home = () => {
     }
   };
 
+  //4. delete 버튼 Handler
+  const deleteTodoList = (id) => {
+    dispatch(deleteTodo(id));
+  };
+
   return (
     <>
       <TodoCreateContainer direction={'column'}>
@@ -140,6 +145,7 @@ const Home = () => {
                   <h2>{item.title}</h2>
                   <h4>{item.desc}</h4>
                 </div>
+                <button onClick={() => deleteTodoList(item.id)}>삭제</button>
               </CardBox>
             ))}
         </TodoBox>
