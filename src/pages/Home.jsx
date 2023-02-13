@@ -2,7 +2,12 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import * as CS from '../components/styled/commonStyle';
 import { useSelector, useDispatch } from 'react-redux';
-import { addTodoList, deleteTodo } from '../redux/modules/todoModule';
+import {
+  addTodoList,
+  deleteTodo,
+  doneTodoList,
+} from '../redux/modules/todoModule';
+import { useNavigate } from 'react-router-dom';
 
 const TodoCreateContainer = styled(CS.DivFlex)`
   width: 80%;
@@ -107,6 +112,15 @@ const Home = () => {
     dispatch(deleteTodo(id));
   };
 
+  //5. Todo is Done or not? Handler
+  const moveTodoList = (id) => {
+    dispatch(doneTodoList(id));
+  };
+
+  //6. navigate를 통해 상세 페이지 접근
+  const navigate = useNavigate();
+  const onAnchorBtnHandler = (id) => navigate(`/${id}`);
+
   return (
     <>
       <TodoCreateContainer direction={'column'}>
@@ -142,10 +156,36 @@ const Home = () => {
             .map((item, i) => (
               <CardBox key={item.id}>
                 <div>
+                  <button onClick={() => onAnchorBtnHandler(item.id)}>
+                    상세페이지
+                  </button>
                   <h2>{item.title}</h2>
                   <h4>{item.desc}</h4>
                 </div>
                 <button onClick={() => deleteTodoList(item.id)}>삭제</button>
+                <button onClick={() => moveTodoList(item.id)}>
+                  {item.isDone ? '취소' : '완료'}
+                </button>
+              </CardBox>
+            ))}
+        </TodoBox>
+        <TodoBox direction={'column'}>
+          <TodoSectionTitle>안했다</TodoSectionTitle>
+          {data
+            .filter((v) => v.isDone === true)
+            .map((item, i) => (
+              <CardBox key={item.id}>
+                <div>
+                  <button onClick={() => onAnchorBtnHandler(item.id)}>
+                    상세페이지
+                  </button>
+                  <h2>{item.title}</h2>
+                  <h4>{item.desc}</h4>
+                </div>
+                <button onClick={() => deleteTodoList(item.id)}>삭제</button>
+                <button onClick={() => moveTodoList(item.id)}>
+                  {item.isDone ? '취소' : '완료'}
+                </button>
               </CardBox>
             ))}
         </TodoBox>
