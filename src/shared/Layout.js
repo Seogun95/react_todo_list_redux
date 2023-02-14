@@ -31,7 +31,7 @@ const LayoutStyles = styled.div`
 function Header() {
   return (
     <HeaderStyles>
-      <span>서근 - Layout Children 배우기</span>
+      <span>서근 TODOLIST</span>
     </HeaderStyles>
   );
 }

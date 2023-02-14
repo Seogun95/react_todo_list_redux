@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { createGlobalStyle } from 'styled-components';
-import reset from 'styled-reset';
 
 export const DivFlex = styled.div`
   display: flex;
@@ -8,15 +7,23 @@ export const DivFlex = styled.div`
   justify-content: center;
   flex-direction: ${(props) => props.direction};
 `;
-
 export const GlobalStyle = createGlobalStyle`
-  ${reset}
+
+@font-face {
+        font-family: 'Maple';
+        src: url(public/Maplestory-Light.woff2)  format('woff2');
+        font-weight: normal;
+    font-style: normal;
+    }
+
   body{
         padding: 0;
         margin: 0;
-        font-family: 'Noto Sans KR', sans-serif;
-        color: black
+        color: black;
+       font-family: 'Maple';
+
     };
+
     button{
         cursor: pointer;
         outline: none;
@@ -28,6 +35,7 @@ export const GlobalStyle = createGlobalStyle`
         padding-left: 10px;
         border: none;
     };
+
     h1,
     h2,
     h3,
