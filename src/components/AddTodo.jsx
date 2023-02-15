@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import * as CS from '../components/styled/commonStyle';
 import { useSelector, useDispatch } from 'react-redux';
@@ -63,7 +63,8 @@ const AddTodo = () => {
   const dispatch = useDispatch();
 
   //3. create 생성 버튼 Handler
-  const createTodoList = () => {
+  const createTodoList = (e) => {
+    e.preventDefault();
     if (titleInput !== '') {
       dispatch(addTodoList(titleInput, descInput));
       setTitleInput('');
@@ -71,31 +72,39 @@ const AddTodo = () => {
     }
   };
 
+  //auto focus using useRef
+  const inputRef = useRef();
+  useEffect(() => {
+    inputRef.current.focus();
+  }, [titleInput]);
+
   return (
     <>
-      <TodoCreateContainer direction={'column'}>
-        <TodoInputContainer>
-          <InputLable htmlFor="todoTitleInput">
-            <span>* </span>할 일
-          </InputLable>
-          <TodoInput
-            id="todoTitleInput"
-            value={titleInput}
-            onChange={titleInputHanlder}
-          />
-        </TodoInputContainer>
-        <TodoInputContainer>
-          <InputLable htmlFor="todoDescInput">
-            <span>* </span>자세히
-          </InputLable>
-          <TodoInput
-            id="todoDescInput"
-            value={descInput}
-            onChange={descInputHanlder}
-          />
-        </TodoInputContainer>
-        <button onClick={createTodoList}>추가하기</button>
-      </TodoCreateContainer>
+      <form action="/" onSubmit={createTodoList}>
+        <TodoCreateContainer direction={'column'}>
+          <TodoInputContainer>
+            <InputLable ref={inputRef} htmlFor="todoTitleInput">
+              <span>* </span>할 일
+            </InputLable>
+            <TodoInput
+              id="todoTitleInput"
+              value={titleInput}
+              onChange={titleInputHanlder}
+            />
+          </TodoInputContainer>
+          <TodoInputContainer>
+            <InputLable htmlFor="todoDescInput">
+              <span>* </span>자세히
+            </InputLable>
+            <TodoInput
+              id="todoDescInput"
+              value={descInput}
+              onChange={descInputHanlder}
+            />
+          </TodoInputContainer>
+          <button>추가하기</button>
+        </TodoCreateContainer>
+      </form>
     </>
   );
 };
