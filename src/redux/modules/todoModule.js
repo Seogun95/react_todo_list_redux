@@ -1,7 +1,4 @@
-// Actions
-const CREATE = 'todo/CREATE';
-const DELETE = 'todo/DELETE';
-const DONE = 'todo/DONE';
+import { createSlice } from '@reduxjs/toolkit';
 
 //초기 상태 값 (state)
 const initialState = [
@@ -19,42 +16,23 @@ const initialState = [
   },
 ];
 
-// Action Creators
-export const addTodoList = (payload) => {
-  return {
-    type: CREATE,
-    payload,
-  };
-};
-
-export const deleteTodo = (id) => {
-  return {
-    type: DELETE,
-    id,
-  };
-};
-
-export const doneTodoList = (id) => {
-  return {
-    type: DONE,
-    id,
-  };
-};
-
-// Reducer
-export default function todoReducer(state = initialState, action) {
-  switch (action.type) {
-    // reducer stuff
-    case CREATE:
+const todosSlice = createSlice({
+  name: 'todoReducer1', // 이 모듈의 이름
+  initialState, // 이 모듈의 초기상태 값
+  reducers: {
+    addTodoList: (state, action) => {
       return [...state, action.payload];
-    case DELETE:
-      return state.filter((item) => item.id !== action.id);
-    case DONE:
+    },
+    deleteTodo: (state, action) => {
+      return state.filter((item) => item.id !== action.payload);
+    },
+    doneTodoList: (state, action) => {
       return state.map((item) =>
-        item.id === action.id ? { ...item, isDone: !item.isDone } : item
+        item.id === action.payload ? { ...item, isDone: !item.isDone } : item
       );
+    },
+  }, // 이 모듈의 Reducer 로직
+});
 
-    default:
-      return state;
-  }
-}
+export default todosSlice.reducer;
+export const { addTodoList, deleteTodo, doneTodoList } = todosSlice.actions;
