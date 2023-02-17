@@ -20,11 +20,10 @@ const initialState = [
 ];
 
 // Action Creators
-export const addTodoList = (title, desc) => {
+export const addTodoList = (payload) => {
   return {
     type: CREATE,
-    title,
-    desc,
+    payload,
   };
 };
 
@@ -47,16 +46,7 @@ export default function todoReducer(state = initialState, action) {
   switch (action.type) {
     // reducer stuff
     case CREATE:
-      //[...기존값을, {새로운 객체로 넣어줘라}]
-      return [
-        ...state,
-        {
-          id: Date.now(),
-          title: action.title,
-          desc: action.desc,
-          isDone: false,
-        },
-      ];
+      return [...state, action.payload];
     case DELETE:
       return state.filter((item) => item.id !== action.id);
     case DONE:

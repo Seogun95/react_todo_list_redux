@@ -66,7 +66,14 @@ const AddTodo = () => {
   const createTodoList = (e) => {
     e.preventDefault();
     if (titleInput !== '') {
-      dispatch(addTodoList(titleInput, descInput));
+      dispatch(
+        addTodoList({
+          title: titleInput,
+          desc: descInput,
+          id: Date.now(),
+          isDone: false,
+        })
+      );
       setTitleInput('');
       setDescInput('');
     }
