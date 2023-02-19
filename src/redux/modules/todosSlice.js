@@ -1,4 +1,15 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+
+//Thunk
+//(1) 이름 : 의미는 크게 없다
+//(2) 함수
+//    ㄴ 인자값 (payload, thunkAPI) => { }
+//thunkAPI.dispath(액션크리에이터(payload))
+export const __addTodo = createAsyncThunk('ADD_TODO_WAIT', (arg, thunkAPI) => {
+  setTimeout(() => {
+    thunkAPI.dispatch(addTodoList(arg));
+  }, 3000);
+});
 
 //초기 상태 값 (state)
 const initialState = [

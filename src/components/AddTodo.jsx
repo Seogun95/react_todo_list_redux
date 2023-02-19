@@ -1,8 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import * as CS from '../components/styled/commonStyle';
 import { useSelector, useDispatch } from 'react-redux';
-import { addTodoList } from '../redux/modules/todoModule';
+import { addTodoList } from '../redux/modules/todosSlice';
+import useInputAutoFoucs from '../hooks/useInputAutoFoucs';
+import useInputOnChange from '../hooks/useInputOnChange';
+import { __addTodo } from '../redux/modules/todosSlice';
 
 const TodoCreateContainer = styled(CS.DivFlex)`
   width: 80%;
@@ -47,11 +50,11 @@ const TodoInput = styled.input`
 `;
 
 const AddTodo = () => {
-  const [titleInput, setTitleInput] = useState('');
-  const [descInput, setDescInput] = useState('');
+  const [titleInput, setTitleInput, titleInputHanlder] = useInputOnChange('');
+  const [descInput, setDescInput, descInputHanlder] = useInputOnChange('');
 
-  const titleInputHanlder = (e) => setTitleInput(e.target.value);
-  const descInputHanlder = (e) => setDescInput(e.target.value);
+  //커스텀 훅 (useInputAutoFoucs)
+  const inputFoucsRef = useInputAutoFoucs();
 
   //1. store에 접근하기 위해서 useSelector!!
   const data = useSelector((state) => {
@@ -67,7 +70,7 @@ const AddTodo = () => {
     e.preventDefault();
     if (titleInput !== '') {
       dispatch(
-        addTodoList({
+        __addTodo({
           title: titleInput,
           desc: descInput,
           id: Date.now(),
@@ -79,18 +82,12 @@ const AddTodo = () => {
     }
   };
 
-  //auto focus using useRef
-  const inputRef = useRef();
-  useEffect(() => {
-    inputRef.current.focus();
-  }, [titleInput]);
-
   return (
     <>
       <form action="/" onSubmit={createTodoList}>
         <TodoCreateContainer direction={'column'}>
           <TodoInputContainer>
-            <InputLable ref={inputRef} htmlFor="todoTitleInput">
+            <InputLable ref={inputFoucsRef} htmlFor="todoTitleInput">
               <span>* </span>할 일
             </InputLable>
             <TodoInput

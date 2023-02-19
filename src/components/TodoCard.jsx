@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { deleteTodo, doneTodoList } from '../redux/modules/todoModule';
+import { deleteTodo, doneTodoList } from '../redux/modules/todosSlice';
 
 const CardBox = styled.div`
   width: 100%;
