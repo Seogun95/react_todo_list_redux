@@ -1,0 +1,19 @@
+{
+  "todos": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "content": "json-server를 배워봅시다."
+    },
+    {
+      "id": 2,
+      "title": "서근",
+      "content": "서근 개발노트"
+    },
+    {
+      "id": 3,
+      "title": "팀스파르타",
+      "content": "스파르타 코딩 클럽"
+    }
+  ]
+}
