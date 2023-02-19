@@ -17,7 +17,7 @@ const initialState = [
 ];
 
 const todosSlice = createSlice({
-  name: 'todoReducer1', // 이 모듈의 이름
+  name: 'todoReducer', // 이 모듈의 이름
   initialState, // 이 모듈의 초기상태 값
   reducers: {
     addTodoList: (state, action) => {
